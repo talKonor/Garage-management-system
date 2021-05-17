@@ -12,13 +12,49 @@ namespace Ex03.GarageLogic
         private float m_CurrentAirPressure;
         private float m_MaxAirPressure;
 
-        public Wheel(string i_WheelManufacturer, float i_CurrentAirPressure, float i_MaxAirPressure)
+        public string WheelManufacturer
         {
-            m_CurrentAirPressure = i_CurrentAirPressure;
-            m_WheelManufacturer = i_WheelManufacturer;
+            get
+            {
+                return m_WheelManufacturer;
+            }
+            set
+            {
+                m_WheelManufacturer = value;
+            }
+        }
+        public float CurrentAirPressure
+        {
+            get
+            {
+                return m_CurrentAirPressure;
+            }
+            set
+            {
+                m_CurrentAirPressure = value;
+            }
+        }
+        public float MaxAirPressure
+        {
+            get
+            {
+                return m_MaxAirPressure;
+            }
+            set
+            {
+                m_MaxAirPressure = value;
+            }
+        }
+        public Wheel(float i_MaxAirPressure)
+        {
             m_MaxAirPressure = i_MaxAirPressure;
         }
-
+        public Wheel Clone()
+        {
+            Wheel clonedWheel = new Wheel(m_MaxAirPressure);
+            clonedWheel.m_WheelManufacturer = m_WheelManufacturer;
+            return clonedWheel; 
+        }
         public void Inflate(float i_AirToAdd) {
             if (m_CurrentAirPressure + i_AirToAdd <= m_MaxAirPressure)
             {
@@ -26,7 +62,7 @@ namespace Ex03.GarageLogic
             }
             else
             {
-                throw //outofrangeexception
+                //throw //outofrangeexception
             }
         }
     }

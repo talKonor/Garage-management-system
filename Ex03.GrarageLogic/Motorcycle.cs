@@ -8,14 +8,68 @@ namespace Ex03.GarageLogic
 {
     abstract class Motorcycle : Vehicle
     {
-        enum eLicenceType
+        public enum eLicenceType
         {
             A,
             B1,
             AA,
             BB
         }
-        private eLicenceType m_LicenceType;
+        protected const int k_NumberOWheels = 2;
+        protected const float k_MaxAirPressure = 30f;
+
+        protected eLicenceType m_LicenceType;
         private int m_EngineCapacity;
+
+        public Motorcycle(string i_LicenseNumber)
+                : base(i_LicenseNumber)
+        {
+            m_Wheels = new List<Wheel>(k_NumberOWheels);
+            for (int i = 0; i < k_NumberOWheels; i++)
+            {
+                m_Wheels[i] = new Wheel(k_MaxAirPressure);
+            }
+        }
+
+        private eLicenceType getLicenceTypeFromString(string i_ColorAsString)
+        {
+            eLicenceType colorToReturn;
+            switch (i_ColorAsString)
+            {
+                case "A":
+                    colorToReturn = eLicenceType.A;
+                    break;
+                case "B1":
+                    colorToReturn = eLicenceType.B1;
+                    break;
+                case "AA":
+                    colorToReturn = eLicenceType.AA;
+                    break;
+                case "BB":
+                    colorToReturn = eLicenceType.BB;
+                    break;
+                default:
+                    throw Exception;
+                    break;
+            }
+
+            return colorToReturn;
+        }
+
+
+        public override void SetAllVehicleProperties(Dictionary<string, string> i_VehicleProperties)
+        {
+            base.SetAllVehicleProperties(i_VehicleProperties);
+            int.TryParse(i_VehicleProperties["Engine Capacity"], out m_EngineCapacity);
+            m_LicenceType = getLicenceTypeFromString(i_VehicleProperties["Licence Type"]);
+        }
+        public virtual Dictionary<string, string> BuildProperties()
+        {
+            Dictionary<string, string> properties = base.BuildProperties();
+            properties.Add("Licence Type", null);
+            properties.Add("Engine Capacity", null);
+
+            return properties;
+        }
     }
 }

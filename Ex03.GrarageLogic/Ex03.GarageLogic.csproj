@@ -43,6 +43,7 @@
     <Compile Include="ElectircalEngine.cs" />
     <Compile Include="ElectricCar.cs" />
     <Compile Include="ElectricMotorcycle.cs" />
+    <Compile Include="Garage.cs" />
     <Compile Include="InternalCombustionEngine.cs" />
     <Compile Include="InternalCombustionEngineCar.cs" />
     <Compile Include="InternalCombustionEngineMotorcycle.cs" />
@@ -52,6 +53,9 @@
     <Compile Include="VehicleCreator.cs" />
     <Compile Include="VehicleRecord.cs" />
     <Compile Include="Wheel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="TODO.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

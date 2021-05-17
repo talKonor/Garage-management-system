@@ -10,7 +10,8 @@ namespace Ex03.GarageLogic
     {
         private ElectircalEngine m_Engine;
        
-        public ElectricCar()
+        public ElectricCar(string i_LicenseNumber)
+                : base(i_LicenseNumber)
         {
             m_Engine = new ElectircalEngine();
         }
@@ -21,6 +22,18 @@ namespace Ex03.GarageLogic
             {
                 return m_Engine;
             }
+        }
+        public override void SetAllVehicleProperties(Dictionary<string, string> i_VehicleProperties)
+        {
+            base.SetAllVehicleProperties(i_VehicleProperties);
+            m_Engine.SetAllEngineProperties(i_VehicleProperties);
+        }
+        public virtual Dictionary<string, string> BuildProperties()
+        {
+            Dictionary<string, string> properties = base.BuildProperties();
+            properties.Concat(m_Engine.BuildProperties());
+
+            return properties;
         }
     }
 }

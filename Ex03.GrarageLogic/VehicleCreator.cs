@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Ex03.GarageLogic
 {
-    class VehicleCreator
+    static class VehicleCreator
     {
         public enum eVehicleType
         {
@@ -16,25 +16,30 @@ namespace Ex03.GarageLogic
             InternalCombustionEngineMotorcycle,
             Truck,
         }
-         public Vehicle createVehicle(eVehicleType i_VehicleType)
+
+         public static Vehicle createVehicle(eVehicleType i_VehicleType,string i_LicenseNumber)
         {
+            
             Vehicle vehicle;
             switch (i_VehicleType)
             {
                 case eVehicleType.ElectricCar:
-                    vehicle = new ElectricCar();
+
+                    vehicle = new ElectricCar(i_LicenseNumber);
                     break;
+
                 case eVehicleType.ElectricMotorcycle:
-                    vehicle = new ElectricMotorcycle();
+                    vehicle = new ElectricMotorcycle(i_LicenseNumber);
                     break;
                 case eVehicleType.InternalCombustionEngineCar:
-                    vehicle = new InternalCombustionEngineCar();
+                    vehicle = new InternalCombustionEngineCar(i_LicenseNumber);
                     break;
                 case eVehicleType.InternalCombustionEngineMotorcycle:
-                    vehicle = new InternalCombustionEngineMotorcycle();
+
+                    vehicle = new InternalCombustionEngineMotorcycle(i_LicenseNumber);
                     break;
                 case eVehicleType.Truck:
-                    vehicle = new Truck();
+                    vehicle = new Truck(i_LicenseNumber);
                     break;
                 default:
                     vehicle = null;
