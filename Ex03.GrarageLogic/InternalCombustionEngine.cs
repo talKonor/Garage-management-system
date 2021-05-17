@@ -8,7 +8,7 @@ namespace Ex03.GarageLogic
 {
     class InternalCombustionEngine
     {
-        enum eFuelType
+        public enum eFuelType
         {
             Soler,
             Octan95,
@@ -19,10 +19,25 @@ namespace Ex03.GarageLogic
         private eFuelType m_FuelType;
         private float m_CurrentAmountOfFuel;
         private float m_MaxTankCapacity; 
-        
-        void fuel(float i_bigMso, eFuelType i_msomso)
-        {
 
+        public InternalCombustionEngine(eFuelType i_FuelType, float i_CurrentAmountOfFuel, float i_MaxTankCapacity)
+        {
+            m_FuelType = i_FuelType;
+            m_CurrentAmountOfFuel = i_CurrentAmountOfFuel;
+            m_MaxTankCapacity = i_MaxTankCapacity;
+        }
+        
+
+        void fuel(float i_AmountOfFuelToAdd, eFuelType i_FuelType)
+        {
+            if(i_AmountOfFuelToAdd + m_CurrentAmountOfFuel <= m_MaxTankCapacity)
+            {
+                m_CurrentAmountOfFuel += i_AmountOfFuelToAdd;
+            }
+            else
+            {
+                throw/// TODO
+            }
         }
 
 

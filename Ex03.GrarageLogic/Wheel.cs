@@ -8,17 +8,26 @@ namespace Ex03.GarageLogic
 {
     class Wheel
     {
-        private string m_WheelManufaturer;
+        private string m_WheelManufacturer;
         private float m_CurrentAirPressure;
         private float m_MaxAirPressure;
 
-
-        public Wheel(string i_WheelManufaturer, float i_CurrentAirPressure, float i_MaxAirPressure)
+        public Wheel(string i_WheelManufacturer, float i_CurrentAirPressure, float i_MaxAirPressure)
         {
-            m_WheelManufaturer = i_WheelManufaturer;
             m_CurrentAirPressure = i_CurrentAirPressure;
+            m_WheelManufacturer = i_WheelManufacturer;
             m_MaxAirPressure = i_MaxAirPressure;
         }
-        public void Inflate(float i_Mso) { }
+
+        public void Inflate(float i_AirToAdd) {
+            if (m_CurrentAirPressure + i_AirToAdd <= m_MaxAirPressure)
+            {
+                m_CurrentAirPressure += i_AirToAdd;
+            }
+            else
+            {
+                throw //outofrangeexception
+            }
+        }
     }
 }
