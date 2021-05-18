@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Ex03.GrarageLogic
+namespace Ex03.GarageLogic
 {
-    class Garage
+    public class Garage
     {
         private Dictionary<string, VehicleRecord> m_LicenseNumberToVehicleRecord;
         public void AddVehicle(Vehicle i_Vehicle, string i_Owner, string i_PhoneNumber)

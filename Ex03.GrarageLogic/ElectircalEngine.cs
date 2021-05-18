@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Ex03.GarageLogic
 {
-    class ElectircalEngine
+    public class ElectircalEngine
     {
         private float m_BatteryTimeLeft;
         private float m_BatteryCapacity;

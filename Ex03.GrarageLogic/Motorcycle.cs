@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Ex03.GarageLogic
 {
-    abstract class Motorcycle : Vehicle
+    public abstract class Motorcycle : Vehicle
     {
         public enum eLicenceType
         {

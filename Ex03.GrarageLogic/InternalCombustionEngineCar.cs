@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Ex03.GarageLogic
 {
-    class InternalCombustionEngineCar : Car
+    public class InternalCombustionEngineCar : Car
     {
         private const float k_MaxTankCapacity = 45f;
         private InternalCombustionEngine m_Engine;

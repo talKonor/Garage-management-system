@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Ex03.GarageLogic
 {
-    static class VehicleCreator
+    public static class VehicleCreator
     {
         public enum eVehicleType
         {
