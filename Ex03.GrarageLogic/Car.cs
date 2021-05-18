@@ -48,7 +48,7 @@ namespace Ex03.GarageLogic
         }
 
         public Car(string i_LicenseNumber)
-                : base(i_LicenseNumber)
+                : base(i_LicenseNumber, k_NumberOWheels, k_MaxAirPressure)
         {
             m_Wheels = new List<Wheel>(k_NumberOWheels);
             for (int i = 0; i < k_NumberOWheels; i++)
@@ -75,7 +75,7 @@ namespace Ex03.GarageLogic
                     colorToReturn = eColor.Black;
                     break;
                 default:
-                    throw Exception;
+                    throw new FormatException("Color not found in list");
                     break;
             }
 
@@ -97,6 +97,24 @@ namespace Ex03.GarageLogic
             properties.Add("Number Of Doors", null);
 
             return properties;
+        }
+        public virtual bool ValidateVehicleProperties(Dictionary<string, string> i_VehicleProperties) 
+        {
+            bool isValid = base.ValidateVehicleProperties(i_VehicleProperties);
+            getColorFromString(i_VehicleProperties["Color"]);
+
+            if(!int.TryParse(i_VehicleProperties["Number Of Doors"], out int numberOfDoors))
+            {
+                throw new FormatException("Number Of Doors is not a number");
+            }
+            else if(numberOfDoors<2 || numberOfDoors > 5)
+            {
+                throw new ValueOutOfRangeException(2, 5, "Number of doors is out of range");
+            }
+
+
+
+            return isValid;
         }
 
     }

@@ -8,13 +8,13 @@ namespace Ex03.GarageLogic
 {
     class ElectricMotorcycle : Motorcycle
     {
+        private const float k_BatteryCapacity = 1.8f;
         private ElectircalEngine m_Engine;
-
 
         public ElectricMotorcycle(string i_LicenseNumber) :
             base(i_LicenseNumber)
         {
-            m_Engine = new ElectircalEngine();
+            m_Engine = new ElectircalEngine(k_BatteryCapacity);
         }
         public ElectircalEngine Engine
         {
@@ -35,6 +35,12 @@ namespace Ex03.GarageLogic
             properties.Concat(m_Engine.BuildProperties());
 
             return properties;
+        }
+
+        public virtual bool ValidateVehicleProperties(Dictionary<string, string> i_VehicleProperties)
+        {
+            return  base.ValidateVehicleProperties(i_VehicleProperties) && m_Engine.ValidateEngineProperties(i_VehicleProperties);
+
         }
     }
 }

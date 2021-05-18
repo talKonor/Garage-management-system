@@ -62,8 +62,42 @@ namespace Ex03.GarageLogic
             }
             else
             {
-                //throw //outofrangeexception
+                throw new ValueOutOfRangeException(0, m_MaxAirPressure - m_CurrentAirPressure, "Air to add is over the limit");
             }
+        }
+
+
+        public virtual Dictionary<string, string> BuildProperties()
+        {
+            Dictionary<string, string> wheelProperties = new Dictionary<string, string>();
+            wheelProperties.Add("Wheel - Manufacturer", null);
+            wheelProperties.Add("Wheel - Current PSI", null);
+
+            return wheelProperties;
+        }
+
+        public virtual void SetAllWheelProperties(Dictionary<string, string> i_VehicleProperties)
+        {          
+            float.TryParse(i_VehicleProperties["Wheel - Current Air Pressure"], out float currentAirPressuer);
+            WheelManufacturer = i_VehicleProperties["Wheel - Manufacture"];
+            CurrentAirPressure = currentAirPressuer;
+        }
+
+        public bool ValidateWheelProperties(Dictionary<string, string> i_VehicleProperties)
+        {
+            bool isValid = true;
+
+            if(i_VehicleProperties["Wheel - Current Air Pressure"].Length < 1)
+            {
+                throw new FormatException("Model Name is empty");
+            }
+
+            if (!float.TryParse(i_VehicleProperties["Wheel - Current Air Pressure"], out float currentAirPressure))
+            {
+                throw new FormatException("Wheel - Current Air Pressure is not a number");
+            }
+
+            return isValid;
         }
     }
 }

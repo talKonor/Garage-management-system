@@ -36,10 +36,13 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Ex03.GrarageLogic\Ex03.GarageLogic.csproj">
-      <Project>{9d209b51-2465-4fc7-b2fc-914ecffb52bb}</Project>
-      <Name>Ex03.GarageLogic</Name>
-    </ProjectReference>
+    <Compile Include="HomeMenu .cs" />
+    <Compile Include="MenuDisplay.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Ex03.GrarageLogic">
+      <HintPath>..\Ex03.GrarageLogic\bin\Debug\Ex03.GrarageLogic.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

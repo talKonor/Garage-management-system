@@ -12,7 +12,7 @@ namespace Ex03.GarageLogic
         protected string m_LicenseNumber;
         protected float m_EnergyPrecentLeft;
         protected List<Wheel> m_Wheels;
-       
+
         public string ModelName
         {
             get
@@ -47,9 +47,15 @@ namespace Ex03.GarageLogic
             }
         }
 
-        public Vehicle(string i_LicenseNumber)
+        public Vehicle(string i_LicenseNumber, int i_NumberOfWheels, float i_MaxAirPressure)
         {
             m_LicenseNumber = i_LicenseNumber;
+            m_Wheels = new List<Wheel>(i_NumberOfWheels);
+           
+            for (int i = 0; i < i_NumberOfWheels; i++)
+            {
+                m_Wheels[i] = new Wheel(i_MaxAirPressure);
+            }
         }
 
         public virtual Dictionary<string, string> BuildProperties()
@@ -64,17 +70,38 @@ namespace Ex03.GarageLogic
         }
         public virtual void SetAllVehicleProperties(Dictionary<string, string> i_VehicleProperties)
         {
-            float currentAirPressuer,energyPrecentLeft;
+            float currentAirPressuer, energyPrecentLeft;
             float.TryParse(i_VehicleProperties["Wheel - Current PSI"], out currentAirPressuer);
-            float.TryParse(i_VehicleProperties["Energy Precent Left"], out ene rgyPrecentLeft);
+            float.TryParse(i_VehicleProperties["Energy Precent Left"], out energyPrecentLeft);
 
-           m_EnergyPrecentLeft = energyPrecentLeft;
-           m_ModelName = i_VehicleProperties["ModelName"];
-            foreach(Wheel wheel in m_Wheels)
+            m_EnergyPrecentLeft = energyPrecentLeft;
+            m_ModelName = i_VehicleProperties["ModelName"];
+            foreach (Wheel wheel in m_Wheels)
             {
-                wheel.WheelManufacturer = i_VehicleProperties["Wheel - Manufacture"];
-                wheel.CurrentAirPressure = currentAirPressuer;
+                wheel.SetAllWheelProperties(i_VehicleProperties);
             }
+        }
+        public virtual bool ValidateVehicleProperties(Dictionary<string, string> i_VehicleProperties)
+        {
+            float checkEnergyPrecentLeft;
+            bool isValid = true;
+
+            if (i_VehicleProperties["ModelName"].Length < 1)
+            {
+                throw new FormatException("Model Name is empty");
+            }
+            if (!(float.TryParse(i_VehicleProperties["Energy Precent Left"], out checkEnergyPrecentLeft)))
+            {
+                throw new FormatException("Energy Precent Left is not a number");
+
+            }
+            else if (checkEnergyPrecentLeft < 0 || checkEnergyPrecentLeft > 100)
+            {
+                throw new ValueOutOfRangeException(0, 100, "Energy Precentage is out of range");
+            }
+
+
+            return isValid;
         }
     }
 }

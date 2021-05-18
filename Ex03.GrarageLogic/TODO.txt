@@ -1,14 +1,9 @@
 ﻿//TODO:
-
-	LOGIC:
-		validate data on the class
 	UI:
 		create the Menu
 		validate data
 
-	EXCEPTIONS:
-		create the required exception (ValueOutOfRangeException)
-		add exception on: 
-			Data valiidation
-			Setter methods
-			Constructors
+
+
+
+

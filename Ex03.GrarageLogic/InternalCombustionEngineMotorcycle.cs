@@ -8,12 +8,13 @@ namespace Ex03.GarageLogic
 {
     class InternalCombustionEngineMotorcycle : Motorcycle
     {
+        private const float k_MaxTankCapacity = 6f;
         private InternalCombustionEngine m_Engine;
 
         public InternalCombustionEngineMotorcycle(string i_LicenseNumber)
            : base(i_LicenseNumber)
         {
-            m_Engine = new InternalCombustionEngine();
+            m_Engine = new InternalCombustionEngine(k_MaxTankCapacity, InternalCombustionEngine.eFuelType.Octan98);
         }
         public override void SetAllVehicleProperties(Dictionary<string, string> i_VehicleProperties)
         {
@@ -26,6 +27,11 @@ namespace Ex03.GarageLogic
             properties.Concat(m_Engine.BuildProperties());
 
             return properties;
+        }
+
+        public virtual bool ValidateVehicleProperties(Dictionary<string, string> i_VehicleProperties)
+        {
+            return base.ValidateVehicleProperties(i_VehicleProperties) && m_Engine.ValidateEngineProperties(i_VehicleProperties);
         }
     }
 }

@@ -22,38 +22,34 @@ namespace Ex03.GarageLogic
         private int m_EngineCapacity;
 
         public Motorcycle(string i_LicenseNumber)
-                : base(i_LicenseNumber)
+                : base(i_LicenseNumber, k_NumberOWheels, k_MaxAirPressure)
         {
-            m_Wheels = new List<Wheel>(k_NumberOWheels);
-            for (int i = 0; i < k_NumberOWheels; i++)
-            {
-                m_Wheels[i] = new Wheel(k_MaxAirPressure);
-            }
+
         }
 
-        private eLicenceType getLicenceTypeFromString(string i_ColorAsString)
+        private eLicenceType getLicenceTypeFromString(string i_LicenceTypeAsString)
         {
-            eLicenceType colorToReturn;
-            switch (i_ColorAsString)
+            eLicenceType licenceTypeToReturn;
+            switch (i_LicenceTypeAsString)
             {
                 case "A":
-                    colorToReturn = eLicenceType.A;
+                    licenceTypeToReturn = eLicenceType.A;
                     break;
                 case "B1":
-                    colorToReturn = eLicenceType.B1;
+                    licenceTypeToReturn = eLicenceType.B1;
                     break;
                 case "AA":
-                    colorToReturn = eLicenceType.AA;
+                    licenceTypeToReturn = eLicenceType.AA;
                     break;
                 case "BB":
-                    colorToReturn = eLicenceType.BB;
+                    licenceTypeToReturn = eLicenceType.BB;
                     break;
                 default:
-                    throw Exception;
+                    throw new FormatException("licence Type not found in list");
                     break;
             }
 
-            return colorToReturn;
+            return licenceTypeToReturn;
         }
 
 
@@ -70,6 +66,19 @@ namespace Ex03.GarageLogic
             properties.Add("Engine Capacity", null);
 
             return properties;
+        }
+
+        public virtual bool ValidateVehicleProperties(Dictionary<string, string> i_VehicleProperties)
+        {
+            bool isValid = base.ValidateVehicleProperties(i_VehicleProperties);
+
+            getLicenceTypeFromString(i_VehicleProperties["Licence Type"]);
+            if (!int.TryParse(i_VehicleProperties["Engine Capacity"], out int engineCapacity))
+            {
+                throw new FormatException("Engine Capacity is not a number");
+            }
+           
+            return isValid;
         }
     }
 }
