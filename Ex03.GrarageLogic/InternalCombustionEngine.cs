@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Ex03.GarageLogic
 {
-    public class InternalCombustionEngine
+    internal class InternalCombustionEngine
     {
         public enum eFuelType
         {
@@ -74,6 +74,15 @@ namespace Ex03.GarageLogic
         {
             Dictionary<string, string> properties = new Dictionary<string, string>();
             properties.Add("Current Amount Of Fuel", null);
+            return properties;
+        }
+
+        public Dictionary<string, string> GetProperties()
+        {
+            Dictionary<string, string> properties = new Dictionary<string, string>();
+            properties.Add("Current Amount Of Fuel", m_CurrentAmountOfFuel.ToString());
+            properties.Add("Max Tank Capacity", m_MaxTankCapacity.ToString());
+            properties.Add("Fuel Type", m_FuelType.ToString());
             return properties;
         }
 

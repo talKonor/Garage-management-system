@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Ex03.GarageLogic
 {
-    public abstract class Motorcycle : Vehicle
+    internal abstract class Motorcycle : Vehicle
     {
         public enum eLicenceType
         {
@@ -19,7 +19,7 @@ namespace Ex03.GarageLogic
         protected const float k_MaxAirPressure = 30f;
 
         protected eLicenceType m_LicenceType;
-        private int m_EngineCapacity;
+        private int m_EngineVolume;
 
         public Motorcycle(string i_LicenseNumber)
                 : base(i_LicenseNumber, k_NumberOWheels, k_MaxAirPressure)
@@ -56,26 +56,34 @@ namespace Ex03.GarageLogic
         public override void SetAllVehicleProperties(Dictionary<string, string> i_VehicleProperties)
         {
             base.SetAllVehicleProperties(i_VehicleProperties);
-            int.TryParse(i_VehicleProperties["Engine Capacity"], out m_EngineCapacity);
+            int.TryParse(i_VehicleProperties["Engine Volume"], out m_EngineVolume);
             m_LicenceType = getLicenceTypeFromString(i_VehicleProperties["Licence Type"]);
         }
-        public virtual Dictionary<string, string> BuildProperties()
+        public override Dictionary<string, string> BuildProperties()
         {
             Dictionary<string, string> properties = base.BuildProperties();
             properties.Add("Licence Type", null);
-            properties.Add("Engine Capacity", null);
+            properties.Add("Engine Volume", null);
 
             return properties;
         }
 
-        public virtual bool ValidateVehicleProperties(Dictionary<string, string> i_VehicleProperties)
+        public override Dictionary<string, string> GetProperties()
+        {
+            Dictionary<string, string> properties = base.GetProperties();
+            properties.Add("Licence Type", m_LicenceType.ToString());
+            properties.Add("Engine Volume", m_EngineVolume.ToString());
+
+            return properties;
+        }
+        public override bool ValidateVehicleProperties(Dictionary<string, string> i_VehicleProperties)
         {
             bool isValid = base.ValidateVehicleProperties(i_VehicleProperties);
 
             getLicenceTypeFromString(i_VehicleProperties["Licence Type"]);
-            if (!int.TryParse(i_VehicleProperties["Engine Capacity"], out int engineCapacity))
+            if (!int.TryParse(i_VehicleProperties["Engine Volume"], out int engineCapacity))
             {
-                throw new FormatException("Engine Capacity is not a number");
+                throw new FormatException("Engine Volume is not a number");
             }
            
             return isValid;

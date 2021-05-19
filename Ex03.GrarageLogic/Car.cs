@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Ex03.GarageLogic
 {
-    public abstract class Car : Vehicle
+    internal abstract class Car : Vehicle
     {
         public enum eColor
         {
@@ -50,11 +50,6 @@ namespace Ex03.GarageLogic
         public Car(string i_LicenseNumber)
                 : base(i_LicenseNumber, k_NumberOWheels, k_MaxAirPressure)
         {
-            m_Wheels = new List<Wheel>(k_NumberOWheels);
-            for (int i = 0; i < k_NumberOWheels; i++)
-            {
-                m_Wheels[i] = new Wheel(k_MaxAirPressure);
-            }
         }
 
         private eColor getColorFromString(string i_ColorAsString)
@@ -98,7 +93,16 @@ namespace Ex03.GarageLogic
 
             return properties;
         }
-        public virtual bool ValidateVehicleProperties(Dictionary<string, string> i_VehicleProperties) 
+
+        public override Dictionary<string, string> GetProperties()
+        {
+            Dictionary<string, string> properties = base.GetProperties();
+            properties.Add("Color", m_CarColor.ToString());
+            properties.Add("Number Of Doors", m_NumberOfDoors.ToString());
+
+            return properties;
+        }
+        public override bool ValidateVehicleProperties(Dictionary<string, string> i_VehicleProperties) 
         {
             bool isValid = base.ValidateVehicleProperties(i_VehicleProperties);
             getColorFromString(i_VehicleProperties["Color"]);

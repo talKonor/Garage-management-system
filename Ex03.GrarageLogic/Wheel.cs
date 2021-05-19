@@ -67,29 +67,39 @@ namespace Ex03.GarageLogic
         }
 
 
-        public virtual Dictionary<string, string> BuildProperties()
+        public Dictionary<string, string> BuildProperties()
         {
             Dictionary<string, string> wheelProperties = new Dictionary<string, string>();
             wheelProperties.Add("Wheel - Manufacturer", null);
-            wheelProperties.Add("Wheel - Current PSI", null);
+            wheelProperties.Add("Wheel - Current Air Pressure", null);
 
             return wheelProperties;
         }
 
-        public virtual void SetAllWheelProperties(Dictionary<string, string> i_VehicleProperties)
+        public void SetAllWheelProperties(Dictionary<string, string> i_VehicleProperties)
         {          
             float.TryParse(i_VehicleProperties["Wheel - Current Air Pressure"], out float currentAirPressuer);
-            WheelManufacturer = i_VehicleProperties["Wheel - Manufacture"];
+            WheelManufacturer = i_VehicleProperties["Wheel - Manufacturer"];
             CurrentAirPressure = currentAirPressuer;
+        }
+
+        public Dictionary<string, string> GetProperties()
+        {
+            Dictionary<string, string> wheelProperties = new Dictionary<string, string>();
+            wheelProperties.Add("Wheel - Manufacturer", m_WheelManufacturer);
+            wheelProperties.Add("Wheel - Max Air Pressure", m_MaxAirPressure.ToString());
+            wheelProperties.Add("Wheel - Current Air Pressure", m_CurrentAirPressure.ToString());
+
+            return wheelProperties;
         }
 
         public bool ValidateWheelProperties(Dictionary<string, string> i_VehicleProperties)
         {
             bool isValid = true;
 
-            if(i_VehicleProperties["Wheel - Current Air Pressure"].Length < 1)
+            if(i_VehicleProperties["Wheel - Manufacturer"].Length < 1)
             {
-                throw new FormatException("Model Name is empty");
+                throw new FormatException("Manufacturer is empty");
             }
 
             if (!float.TryParse(i_VehicleProperties["Wheel - Current Air Pressure"], out float currentAirPressure))

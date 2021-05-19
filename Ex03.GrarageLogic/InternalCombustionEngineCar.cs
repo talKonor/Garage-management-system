@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Ex03.GarageLogic
 {
-    public class InternalCombustionEngineCar : Car
+    internal class InternalCombustionEngineCar : Car
     {
         private const float k_MaxTankCapacity = 45f;
         private InternalCombustionEngine m_Engine;
@@ -23,15 +23,22 @@ namespace Ex03.GarageLogic
             m_Engine.SetAllEngineProperties(i_VehicleProperties);
         }
 
-        public virtual Dictionary<string, string> BuildProperties()
+        public override Dictionary<string, string> BuildProperties()
         {
-            Dictionary<string, string> properties = base.BuildProperties();
-            properties.Concat(m_Engine.BuildProperties());
+            Dictionary<string, string> vehicleProperties = base.BuildProperties();
+            vehicleProperties = vehicleProperties.Concat(m_Engine.BuildProperties()).ToDictionary(e => e.Key, e => e.Value);
 
-            return properties;
+            return vehicleProperties;
         }
 
-        public virtual bool ValidateVehicleProperties(Dictionary<string, string> i_VehicleProperties)
+        public override Dictionary<string, string> GetProperties()
+        {
+            Dictionary<string, string> vehicleProperties = base.GetProperties();
+            vehicleProperties = vehicleProperties.Concat(m_Engine.GetProperties()).ToDictionary(e => e.Key, e => e.Value);
+
+            return vehicleProperties;
+        }
+        public override bool ValidateVehicleProperties(Dictionary<string, string> i_VehicleProperties)
         {
             return base.ValidateVehicleProperties(i_VehicleProperties) && m_Engine.ValidateEngineProperties(i_VehicleProperties);
         }

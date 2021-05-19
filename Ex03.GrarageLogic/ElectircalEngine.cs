@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Ex03.GarageLogic
 {
-    public class ElectircalEngine
+    internal class ElectircalEngine
     {
         private float m_BatteryTimeLeft;
         private float m_BatteryCapacity;
@@ -40,6 +40,15 @@ namespace Ex03.GarageLogic
             Dictionary<string, string> properties = new Dictionary<string, string>();
             properties.Add("Battery Time Left", null);
             properties.Add("Battery Capacity", null);
+            return properties;
+        }
+
+        public Dictionary<string, string> GetProperties()
+        {
+            Dictionary<string, string> properties = new Dictionary<string, string>();
+            properties.Add("Battery Time Left", m_BatteryTimeLeft.ToString());
+            properties.Add("Battery Capacity", m_BatteryCapacity.ToString());
+
             return properties;
         }
 

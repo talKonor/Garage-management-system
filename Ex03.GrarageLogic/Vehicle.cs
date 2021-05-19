@@ -50,11 +50,11 @@ namespace Ex03.GarageLogic
         public Vehicle(string i_LicenseNumber, int i_NumberOfWheels, float i_MaxAirPressure)
         {
             m_LicenseNumber = i_LicenseNumber;
-            m_Wheels = new List<Wheel>(i_NumberOfWheels);
+            m_Wheels = new List<Wheel>();
            
             for (int i = 0; i < i_NumberOfWheels; i++)
             {
-                m_Wheels[i] = new Wheel(i_MaxAirPressure);
+                m_Wheels.Add( new Wheel(i_MaxAirPressure));
             }
         }
 
@@ -63,15 +63,23 @@ namespace Ex03.GarageLogic
             Dictionary<string, string> vehicleProperties = new Dictionary<string, string>();
             vehicleProperties.Add("ModelName", null);
             vehicleProperties.Add("Energy Precent Left", null);
-            vehicleProperties.Add("Wheel - Manufacturer", null);
-            vehicleProperties.Add("Wheel - Current PSI", null);
+            vehicleProperties = vehicleProperties.Concat(m_Wheels[0].BuildProperties()).ToDictionary(e => e.Key, e => e.Value);
+            return vehicleProperties;
 
+        }
+
+        public virtual Dictionary<string, string> GetProperties()
+        {
+            Dictionary<string, string> vehicleProperties = new Dictionary<string, string>();
+            vehicleProperties.Add("ModelName", m_ModelName);
+            vehicleProperties.Add("Energy Precent Left", m_EnergyPrecentLeft.ToString());
+            vehicleProperties = vehicleProperties.Concat(m_Wheels[0].GetProperties()).ToDictionary(e => e.Key, e => e.Value);
             return vehicleProperties;
         }
+
         public virtual void SetAllVehicleProperties(Dictionary<string, string> i_VehicleProperties)
         {
             float currentAirPressuer, energyPrecentLeft;
-            float.TryParse(i_VehicleProperties["Wheel - Current PSI"], out currentAirPressuer);
             float.TryParse(i_VehicleProperties["Energy Precent Left"], out energyPrecentLeft);
 
             m_EnergyPrecentLeft = energyPrecentLeft;
@@ -102,6 +110,14 @@ namespace Ex03.GarageLogic
 
 
             return isValid;
+        }
+
+        public virtual void check()
+        {
+            Console.WriteLine(m_ModelName);
+            Console.WriteLine(m_LicenseNumber);
+            Console.WriteLine(m_EnergyPrecentLeft);
+
         }
     }
 }

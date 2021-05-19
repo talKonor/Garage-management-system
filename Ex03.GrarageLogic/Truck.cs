@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Ex03.GarageLogic
 {
-    public class Truck : Vehicle
+    internal class Truck : Vehicle
     {
         protected const int k_NumberOWheels = 16;
         protected const float k_MaxAirPressure = 26f;
@@ -29,17 +29,27 @@ namespace Ex03.GarageLogic
             m_IsDrivingHazardousMaterials = i_VehicleProperties["Is Driving Hazardous Materials"] == "Yes";
             m_Engine.SetAllEngineProperties(i_VehicleProperties);
         }
-        public virtual Dictionary<string, string> BuildProperties()
+        public override Dictionary<string, string> BuildProperties()
         {
-            Dictionary<string, string> properties = base.BuildProperties();
-            properties.Concat(m_Engine.BuildProperties());
-            properties.Add("Is Driving Hazardous Materials", null);
-            properties.Add("Maximum Carrying Weight", null);
+            Dictionary<string, string> vehicleProperties = base.BuildProperties();
+            vehicleProperties = vehicleProperties.Concat(m_Engine.BuildProperties()).ToDictionary(e => e.Key, e => e.Value);
+            vehicleProperties.Add("Is Driving Hazardous Materials", null);
+            vehicleProperties.Add("Maximum Carrying Weight", null);
 
-            return properties;
+            return vehicleProperties;
         }
 
-        public virtual bool ValidateVehicleProperties(Dictionary<string, string> i_VehicleProperties)
+        public override Dictionary<string, string> GetProperties()
+        {
+            Dictionary<string, string> vehicleProperties = base.GetProperties();
+            vehicleProperties = vehicleProperties.Concat(m_Engine.GetProperties()).ToDictionary(e => e.Key, e => e.Value);
+            vehicleProperties.Add("Is Driving Hazardous Materials", m_IsDrivingHazardousMaterials.ToString());
+            vehicleProperties.Add("Maximum Carrying Weight", m_MaximumCarryingWeight.ToString());
+
+            return vehicleProperties;
+        }
+
+        public override bool ValidateVehicleProperties(Dictionary<string, string> i_VehicleProperties)
         {
             bool isValid = base.ValidateVehicleProperties(i_VehicleProperties);
 
@@ -55,6 +65,15 @@ namespace Ex03.GarageLogic
 
 
             return isValid;
+        }
+
+        public override void check()
+        {
+            base.check();
+            Console.WriteLine(m_IsDrivingHazardousMaterials);
+            Console.WriteLine(m_MaximumCarryingWeight);
+            Console.WriteLine(m_Engine);
+
         }
     }
 

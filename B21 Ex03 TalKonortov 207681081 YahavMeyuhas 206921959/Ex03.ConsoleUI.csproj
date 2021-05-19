@@ -6,7 +6,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{1F9B607D-2115-490E-9497-09046DCF75C3}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <RootNamespace>B21_Ex03_TalKonortov_207681081_YahavMeyuhas_206921959</RootNamespace>
+    <RootNamespace>Ex03.ConsoleUI</RootNamespace>
     <AssemblyName>B21 Ex03 TalKonortov 207681081 YahavMeyuhas 206921959</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -36,8 +36,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="HomeMenu .cs" />
+    <Compile Include="MenuController.cs" />
     <Compile Include="MenuDisplay.cs" />
+    <Compile Include="Program.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Ex03.GrarageLogic\Ex03.GarageLogic.csproj">

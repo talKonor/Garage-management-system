@@ -21,8 +21,9 @@ namespace Ex03.ConsoleUI
         }
         public void ShowMenu()
         {
+            Console.Clear();       
             int i = 1;
-            string menuToPrint = "";
+            string menuToPrint = "Please choose one of the following options: \n";
             foreach(string option in m_Options)
             {
                 menuToPrint+=(string.Format("{0}. {1}{2}", i, option,Environment.NewLine));
@@ -30,5 +31,46 @@ namespace Ex03.ConsoleUI
             }
             Console.WriteLine(menuToPrint);
         }
+        public int getUserInput()
+        {
+            string userInputAsString;
+            int userInputToReturn;
+            bool isValid = false;
+            do
+            {
+                userInputAsString = Console.ReadLine();
+                if (!(int.TryParse(userInputAsString, out userInputToReturn)))
+                {
+                    Console.WriteLine("Wrong Input! Please enter a Integer number");
+                    isValid = false;
+                }
+                else
+                {
+                    isValid = checkInput(userInputToReturn, 1, MenuSize);
+                }
+            } while (!isValid);
+
+            return userInputToReturn;
+        }
+
+        private bool checkInput(int i_UserInput, int i_MinPickPossible, int i_MaxPickPossible)
+        {
+            bool inputIsValid = true;
+
+            if (i_UserInput < i_MinPickPossible || i_UserInput > i_MaxPickPossible)
+            {
+                Console.WriteLine("Invalid input! the chosen spot is not in the range of the Menu,please choose valid option");
+                inputIsValid = false;
+            }
+
+            return inputIsValid;
+        }
+        public int MenuSize {
+            get
+            {
+                return m_Options.Count;
+            }
+        }
+
     }
 }
