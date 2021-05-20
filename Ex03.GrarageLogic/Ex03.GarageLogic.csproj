@@ -43,6 +43,7 @@
     <Compile Include="ElectircalEngine.cs" />
     <Compile Include="ElectricCar.cs" />
     <Compile Include="ElectricMotorcycle.cs" />
+    <Compile Include="Engine.cs" />
     <Compile Include="Garage.cs" />
     <Compile Include="InternalCombustionEngine.cs" />
     <Compile Include="InternalCombustionEngineCar.cs" />

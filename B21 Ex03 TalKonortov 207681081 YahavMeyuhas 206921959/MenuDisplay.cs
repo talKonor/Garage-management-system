@@ -19,11 +19,11 @@ namespace Ex03.ConsoleUI
         {
             return i_Input > 0 && i_Input <= m_Options.Count();
         }
-        public void ShowMenu()
+        public void ShowMenu(string i_Title)
         {
             Console.Clear();       
             int i = 1;
-            string menuToPrint = "Please choose one of the following options: \n";
+            string menuToPrint = i_Title;
             foreach(string option in m_Options)
             {
                 menuToPrint+=(string.Format("{0}. {1}{2}", i, option,Environment.NewLine));

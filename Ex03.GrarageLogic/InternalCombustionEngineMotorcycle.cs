@@ -40,5 +40,13 @@ namespace Ex03.GarageLogic
         {
             return base.ValidateVehicleProperties(i_VehicleProperties) && m_Engine.ValidateEngineProperties(i_VehicleProperties);
         }
+        public override eEngineType GetEngineType()
+        {
+            return m_Engine.GetEngineType();
+        }
+        public override Engine getEngine()
+        {
+            return m_Engine;
+        }
     }
 }

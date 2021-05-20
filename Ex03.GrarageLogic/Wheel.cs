@@ -53,17 +53,11 @@ namespace Ex03.GarageLogic
         {
             Wheel clonedWheel = new Wheel(m_MaxAirPressure);
             clonedWheel.m_WheelManufacturer = m_WheelManufacturer;
-            return clonedWheel; 
+            return clonedWheel;
         }
-        public void Inflate(float i_AirToAdd) {
-            if (m_CurrentAirPressure + i_AirToAdd <= m_MaxAirPressure)
-            {
-                m_CurrentAirPressure += i_AirToAdd;
-            }
-            else
-            {
-                throw new ValueOutOfRangeException(0, m_MaxAirPressure - m_CurrentAirPressure, "Air to add is over the limit");
-            }
+        public void Inflate()
+        {
+            m_CurrentAirPressure = m_MaxAirPressure;
         }
 
 
@@ -77,7 +71,7 @@ namespace Ex03.GarageLogic
         }
 
         public void SetAllWheelProperties(Dictionary<string, string> i_VehicleProperties)
-        {          
+        {
             float.TryParse(i_VehicleProperties["Wheel - Current Air Pressure"], out float currentAirPressuer);
             WheelManufacturer = i_VehicleProperties["Wheel - Manufacturer"];
             CurrentAirPressure = currentAirPressuer;
@@ -97,7 +91,7 @@ namespace Ex03.GarageLogic
         {
             bool isValid = true;
 
-            if(i_VehicleProperties["Wheel - Manufacturer"].Length < 1)
+            if (i_VehicleProperties["Wheel - Manufacturer"].Length < 1)
             {
                 throw new FormatException("Manufacturer is empty");
             }

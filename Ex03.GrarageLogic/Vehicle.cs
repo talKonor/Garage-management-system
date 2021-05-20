@@ -8,6 +8,11 @@ namespace Ex03.GarageLogic
 {
     public abstract class Vehicle
     {
+       public enum eEngineType
+        {
+            ElectircalEngine,
+            InternalCombustionEngine
+        }
         protected string m_ModelName;
         protected string m_LicenseNumber;
         protected float m_EnergyPrecentLeft;
@@ -112,6 +117,14 @@ namespace Ex03.GarageLogic
             return isValid;
         }
 
+        public abstract eEngineType GetEngineType();
+        public void Inflate()
+        {
+            foreach(Wheel wheel in m_Wheels)
+            {
+                wheel.Inflate();
+            }
+        }
         public virtual void check()
         {
             Console.WriteLine(m_ModelName);
@@ -119,5 +132,7 @@ namespace Ex03.GarageLogic
             Console.WriteLine(m_EnergyPrecentLeft);
 
         }
+
+        public abstract Engine getEngine();
     }
 }

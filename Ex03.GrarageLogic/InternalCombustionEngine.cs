@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Ex03.GarageLogic
 {
-    internal class InternalCombustionEngine
+    public class InternalCombustionEngine : Engine
     {
         public enum eFuelType
         {
@@ -19,28 +19,51 @@ namespace Ex03.GarageLogic
         private eFuelType m_FuelType;
         private float m_CurrentAmountOfFuel;
         private float m_MaxTankCapacity;
-        
 
-        public InternalCombustionEngine(float i_MaxTankCapacity, eFuelType i_FuelType)
+
+        public float CurrentAmountOfFuel
+        {
+            get
+            {
+                return m_CurrentAmountOfFuel;
+            }
+        }
+        public float MaxTankCapacity
+        {
+            get
+            {
+                return m_MaxTankCapacity;
+            }
+        }
+
+        public InternalCombustionEngine(float i_MaxTankCapacity, eFuelType i_FuelType) : base()
         {
             m_MaxTankCapacity = i_MaxTankCapacity;
             m_FuelType = i_FuelType;
         }
-        void fuel(float i_AmountOfFuelToAdd, eFuelType i_FuelType)
+        public void Fuel(eFuelType i_FuelType, float i_AmountOfFuelToAdd)
         {
-            if (i_AmountOfFuelToAdd < 0)
+            if (i_FuelType.Equals(m_FuelType))
             {
-                throw new FormatException("Cant add negative amount of fuel");
-            }
-            if(i_AmountOfFuelToAdd + m_CurrentAmountOfFuel <= m_MaxTankCapacity)
-            {
-                m_CurrentAmountOfFuel += i_AmountOfFuelToAdd;
+                if (i_AmountOfFuelToAdd < 0)
+                {
+                    throw new ArgumentException("Cant add negative amount of fuel");
+                }
+                if (i_AmountOfFuelToAdd + m_CurrentAmountOfFuel <= m_MaxTankCapacity)
+                {
+                    m_CurrentAmountOfFuel += i_AmountOfFuelToAdd;
+                }
+                else
+                {
+                    throw new ValueOutOfRangeException(0, m_MaxTankCapacity - m_CurrentAmountOfFuel, "Cant add fuel more than the size of tank");
+                }
             }
             else
             {
-                throw new ValueOutOfRangeException(0, m_MaxTankCapacity-m_CurrentAmountOfFuel, "Cant add fuel more than the size of tank");
+                throw new ArgumentException("Wrong fuel type");
             }
         }
+
 
         public static eFuelType getFuelTypeFromString(string i_FuelTypeAsString)
         {
@@ -94,13 +117,17 @@ namespace Ex03.GarageLogic
             {
                 throw new FormatException("Current Amount Of Fuel is not a number");
             }
-            else if(currentAmountOfFuel<0 || currentAmountOfFuel > m_MaxTankCapacity)
+            else if (currentAmountOfFuel < 0 || currentAmountOfFuel > m_MaxTankCapacity)
             {
                 throw new ValueOutOfRangeException(0, m_MaxTankCapacity, "Current amount of fuel is out of range");
             }
 
 
             return isValid;
+        }
+        public Vehicle.eEngineType GetEngineType()
+        {
+            return Vehicle.eEngineType.InternalCombustionEngine;
         }
     }
 }

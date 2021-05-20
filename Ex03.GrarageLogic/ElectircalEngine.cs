@@ -6,13 +6,26 @@ using System.Threading.Tasks;
 
 namespace Ex03.GarageLogic
 {
-    internal class ElectircalEngine
+    public class ElectircalEngine: Engine
     {
         private float m_BatteryTimeLeft;
         private float m_BatteryCapacity;
 
-
-        public ElectircalEngine(float i_BatteryCapacity)
+         public float BatteryCapacity
+        {
+            get
+            {
+                return m_BatteryCapacity;
+            }
+        }
+        public float BatteryTimeLeft
+        {
+            get
+            {
+                return m_BatteryTimeLeft;
+            }
+        }
+        public ElectircalEngine(float i_BatteryCapacity) :base()
         {
             m_BatteryCapacity = i_BatteryCapacity;
         }
@@ -68,6 +81,28 @@ namespace Ex03.GarageLogic
 
 
             return isValid;
+        }
+        public Vehicle.eEngineType GetEngineType()
+        {
+            return Vehicle.eEngineType.ElectircalEngine;
+        }
+
+        public void Charge(float i_AmountToCharge)
+        {
+
+            i_AmountToCharge /= 60;
+                if (i_AmountToCharge < 0)
+                {
+                    throw new ArgumentException("Cant add negative amount of Charge");
+                }
+                if (i_AmountToCharge + m_BatteryTimeLeft <= m_BatteryCapacity)
+                {
+                m_BatteryTimeLeft += i_AmountToCharge;
+                }
+                else
+                {
+                    throw new ValueOutOfRangeException(0, m_BatteryCapacity - m_BatteryTimeLeft, "Cant add fuel more than the size of tank");
+                }
         }
     }
 }

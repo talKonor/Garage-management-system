@@ -75,6 +75,14 @@ namespace Ex03.GarageLogic
             Console.WriteLine(m_Engine);
 
         }
+        public override eEngineType GetEngineType()
+        {
+            return m_Engine.GetEngineType();
+        }
+        public override Engine getEngine()
+        {
+            return m_Engine;
+        }
     }
 
 }

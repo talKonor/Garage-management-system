@@ -10,11 +10,12 @@ namespace Ex03.GarageLogic
     {
         public enum eVehicleType
         {
-            ElectricCar,
-            ElectricMotorcycle,
-            InternalCombustionEngineCar,
-            InternalCombustionEngineMotorcycle,
-            Truck,
+            ElectricCar=1,
+            ElectricMotorcycle=2,
+            InternalCombustionEngineCar=3,
+            InternalCombustionEngineMotorcycle=4,
+            Truck=5,
+
         }
         public static Vehicle createVehicle(eVehicleType i_VehicleType,string i_LicenseNumber)
         {
