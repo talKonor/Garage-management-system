@@ -6,67 +6,34 @@ using System.Threading.Tasks;
 
 namespace Ex03.GarageLogic
 {
-    public class ElectircalEngine: Engine
+    public class ElectircalEngine : Engine
     {
-        private float m_BatteryTimeLeft;
-        private float m_BatteryCapacity;
 
-         public float BatteryCapacity
+        public ElectircalEngine(float i_BatteryCapacity) : base()
         {
-            get
-            {
-                return m_BatteryCapacity;
-            }
+            m_EnergeyCapacity = i_BatteryCapacity;
         }
-        public float BatteryTimeLeft
+        public override void SetAllEngineProperties(Dictionary<string, string> i_EngineProperties)
         {
-            get
-            {
-                return m_BatteryTimeLeft;
-            }
+            float.TryParse(i_EngineProperties["Battery Time Left"], out m_EnergeyLeft);
         }
-        public ElectircalEngine(float i_BatteryCapacity) :base()
-        {
-            m_BatteryCapacity = i_BatteryCapacity;
-        }
-        public void charge(float i_ChargeTimeToAdd) {
-            if (i_ChargeTimeToAdd < 0)
-            {
-                throw new FormatException("Cant add negative amount of charge time");
-            }
-            if (m_BatteryTimeLeft + i_ChargeTimeToAdd <= m_BatteryCapacity)
-            {
-                m_BatteryCapacity += i_ChargeTimeToAdd;
-            }
-            else
-            {
-                throw new ValueOutOfRangeException(0, m_BatteryCapacity-m_BatteryTimeLeft, "total charge time is over the limit");
-            }
-        }
-        public  void SetAllEngineProperties(Dictionary<string, string> i_EngineProperties)
-        {
-            float.TryParse(i_EngineProperties["Battery Time Left"], out m_BatteryTimeLeft);
-            float.TryParse(i_EngineProperties["Battery Capacity"], out m_BatteryCapacity);
-        }
-        public Dictionary<string, string> BuildProperties()
+        public override Dictionary<string, string> BuildProperties()
         {
             Dictionary<string, string> properties = new Dictionary<string, string>();
             properties.Add("Battery Time Left", null);
-            properties.Add("Battery Capacity", null);
             return properties;
         }
 
-        public Dictionary<string, string> GetProperties()
+        public override Dictionary<string, string> GetProperties()
         {
             Dictionary<string, string> properties = new Dictionary<string, string>();
-            properties.Add("Battery Time Left", m_BatteryTimeLeft.ToString());
-            properties.Add("Battery Capacity", m_BatteryCapacity.ToString());
+            properties.Add("Battery Time Left", m_EnergeyLeft.ToString());
+            properties.Add("Battery Capacity", m_EnergeyCapacity.ToString());
 
             return properties;
         }
 
-
-        public bool ValidateEngineProperties(Dictionary<string, string> i_VehicleProperties)
+        public override bool ValidateEngineProperties(Dictionary<string, string> i_VehicleProperties)
         {
             bool isValid = true;
 
@@ -74,35 +41,29 @@ namespace Ex03.GarageLogic
             {
                 throw new FormatException("Battery Time Left is not a number");
             }
-            if (!float.TryParse(i_VehicleProperties["Battery Capacity"], out float batteryCapacity))
-            {
-                throw new FormatException("Battery Capacity is not a number");
-            }
 
 
             return isValid;
         }
-        public Vehicle.eEngineType GetEngineType()
-        {
-            return Vehicle.eEngineType.ElectircalEngine;
-        }
-
-        public void Charge(float i_AmountToCharge)
+        public void Charge(float i_AmountToCharge, Vehicle i_VehicleToFuel)
         {
 
             i_AmountToCharge /= 60;
-                if (i_AmountToCharge < 0)
-                {
-                    throw new ArgumentException("Cant add negative amount of Charge");
-                }
-                if (i_AmountToCharge + m_BatteryTimeLeft <= m_BatteryCapacity)
-                {
-                m_BatteryTimeLeft += i_AmountToCharge;
-                }
-                else
-                {
-                    throw new ValueOutOfRangeException(0, m_BatteryCapacity - m_BatteryTimeLeft, "Cant add fuel more than the size of tank");
-                }
+            if (i_AmountToCharge < 0)
+            {
+                throw new ArgumentException("Cant add negative amount of Charge");
+            }
+            if (i_AmountToCharge + m_EnergeyLeft <= m_EnergeyCapacity)
+            {
+                m_EnergeyLeft += i_AmountToCharge;
+                i_VehicleToFuel.EnergyPrecentLeft = CalculatePrecentsOfEnergtLeft();
+            }
+            else
+            {
+                throw new ValueOutOfRangeException(0, m_EnergeyCapacity - m_EnergeyLeft, "Cant add fuel more than the size of tank");
+            }
+
         }
+
     }
 }

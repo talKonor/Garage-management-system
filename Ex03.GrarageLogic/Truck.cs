@@ -11,15 +11,14 @@ namespace Ex03.GarageLogic
         protected const int k_NumberOWheels = 16;
         protected const float k_MaxAirPressure = 26f;
         protected const float k_MaxTankCapacity = 120f;
-
+        private const InternalCombustionEngine.eFuelType k_FuelType = InternalCombustionEngine.eFuelType.Soler;
         private bool m_IsDrivingHazardousMaterials;
         private float m_MaximumCarryingWeight;
-        private InternalCombustionEngine m_Engine;
 
         public Truck(string i_LicenseNumber)
            : base(i_LicenseNumber, k_NumberOWheels, k_MaxAirPressure)
         {
-            m_Engine = new InternalCombustionEngine(k_MaxTankCapacity,InternalCombustionEngine.eFuelType.Soler);
+            m_Engine = new InternalCombustionEngine(k_MaxTankCapacity, k_FuelType);
 
         }
         public override void SetAllVehicleProperties(Dictionary<string, string> i_VehicleProperties)
@@ -27,12 +26,10 @@ namespace Ex03.GarageLogic
             base.SetAllVehicleProperties(i_VehicleProperties);
             float.TryParse(i_VehicleProperties["Maximum Carrying Weight"], out m_MaximumCarryingWeight);
             m_IsDrivingHazardousMaterials = i_VehicleProperties["Is Driving Hazardous Materials"] == "Yes";
-            m_Engine.SetAllEngineProperties(i_VehicleProperties);
         }
         public override Dictionary<string, string> BuildProperties()
         {
             Dictionary<string, string> vehicleProperties = base.BuildProperties();
-            vehicleProperties = vehicleProperties.Concat(m_Engine.BuildProperties()).ToDictionary(e => e.Key, e => e.Value);
             vehicleProperties.Add("Is Driving Hazardous Materials", null);
             vehicleProperties.Add("Maximum Carrying Weight", null);
 
@@ -42,7 +39,6 @@ namespace Ex03.GarageLogic
         public override Dictionary<string, string> GetProperties()
         {
             Dictionary<string, string> vehicleProperties = base.GetProperties();
-            vehicleProperties = vehicleProperties.Concat(m_Engine.GetProperties()).ToDictionary(e => e.Key, e => e.Value);
             vehicleProperties.Add("Is Driving Hazardous Materials", m_IsDrivingHazardousMaterials.ToString());
             vehicleProperties.Add("Maximum Carrying Weight", m_MaximumCarryingWeight.ToString());
 
@@ -74,10 +70,6 @@ namespace Ex03.GarageLogic
             Console.WriteLine(m_MaximumCarryingWeight);
             Console.WriteLine(m_Engine);
 
-        }
-        public override eEngineType GetEngineType()
-        {
-            return m_Engine.GetEngineType();
         }
         public override Engine getEngine()
         {

@@ -8,15 +8,17 @@ namespace Ex03.GarageLogic
 {
     public abstract class Vehicle
     {
-       public enum eEngineType
+        public enum eEngineType
         {
             ElectircalEngine,
             InternalCombustionEngine
         }
-        protected string m_ModelName;
-        protected string m_LicenseNumber;
+
+        private string m_ModelName;
+        private string m_LicenseNumber;
         protected float m_EnergyPrecentLeft;
-        protected List<Wheel> m_Wheels;
+        protected Engine m_Engine;
+        private List<Wheel> m_Wheels;
 
         public string ModelName
         {
@@ -51,7 +53,13 @@ namespace Ex03.GarageLogic
                 m_EnergyPrecentLeft = value;
             }
         }
-
+         public Engine Engine
+        {
+            get
+            {
+                return m_Engine;
+            }
+        }
         public Vehicle(string i_LicenseNumber, int i_NumberOfWheels, float i_MaxAirPressure)
         {
             m_LicenseNumber = i_LicenseNumber;
@@ -67,8 +75,8 @@ namespace Ex03.GarageLogic
         {
             Dictionary<string, string> vehicleProperties = new Dictionary<string, string>();
             vehicleProperties.Add("ModelName", null);
-            vehicleProperties.Add("Energy Precent Left", null);
             vehicleProperties = vehicleProperties.Concat(m_Wheels[0].BuildProperties()).ToDictionary(e => e.Key, e => e.Value);
+            vehicleProperties = vehicleProperties.Concat(m_Engine.BuildProperties()).ToDictionary(e => e.Key, e => e.Value);
             return vehicleProperties;
 
         }
@@ -79,45 +87,36 @@ namespace Ex03.GarageLogic
             vehicleProperties.Add("ModelName", m_ModelName);
             vehicleProperties.Add("Energy Precent Left", m_EnergyPrecentLeft.ToString());
             vehicleProperties = vehicleProperties.Concat(m_Wheels[0].GetProperties()).ToDictionary(e => e.Key, e => e.Value);
+            vehicleProperties = vehicleProperties.Concat(m_Engine.GetProperties()).ToDictionary(e => e.Key, e => e.Value);
             return vehicleProperties;
         }
 
         public virtual void SetAllVehicleProperties(Dictionary<string, string> i_VehicleProperties)
         {
-            float currentAirPressuer, energyPrecentLeft;
-            float.TryParse(i_VehicleProperties["Energy Precent Left"], out energyPrecentLeft);
-
-            m_EnergyPrecentLeft = energyPrecentLeft;
+            float  energyPrecentLeft;
+            
             m_ModelName = i_VehicleProperties["ModelName"];
             foreach (Wheel wheel in m_Wheels)
             {
                 wheel.SetAllWheelProperties(i_VehicleProperties);
             }
+
+            m_Engine.SetAllEngineProperties(i_VehicleProperties);
+            m_EnergyPrecentLeft = m_Engine.CalculatePrecentsOfEnergtLeft();
         }
         public virtual bool ValidateVehicleProperties(Dictionary<string, string> i_VehicleProperties)
         {
-            float checkEnergyPrecentLeft;
             bool isValid = true;
 
             if (i_VehicleProperties["ModelName"].Length < 1)
             {
                 throw new FormatException("Model Name is empty");
             }
-            if (!(float.TryParse(i_VehicleProperties["Energy Precent Left"], out checkEnergyPrecentLeft)))
-            {
-                throw new FormatException("Energy Precent Left is not a number");
-
-            }
-            else if (checkEnergyPrecentLeft < 0 || checkEnergyPrecentLeft > 100)
-            {
-                throw new ValueOutOfRangeException(0, 100, "Energy Precentage is out of range");
-            }
 
 
             return isValid;
         }
 
-        public abstract eEngineType GetEngineType();
         public void Inflate()
         {
             foreach(Wheel wheel in m_Wheels)
@@ -125,6 +124,7 @@ namespace Ex03.GarageLogic
                 wheel.Inflate();
             }
         }
+       
         public virtual void check()
         {
             Console.WriteLine(m_ModelName);

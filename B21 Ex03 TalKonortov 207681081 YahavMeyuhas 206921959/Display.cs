@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace Ex03.ConsoleUI
 {
-    class MenuDisplay
+    class Display
     {
         private List<string> m_Options;
-        public MenuDisplay(List<string> i_Options)
+        public Display(List<string> i_Options)
         {
             m_Options = i_Options;
         

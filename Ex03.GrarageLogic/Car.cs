@@ -53,47 +53,24 @@ namespace Ex03.GarageLogic
         {
         }
 
-        private eColor getColorFromString(string i_ColorAsString)
-        {
-            eColor colorToReturn;
-            switch (i_ColorAsString)
-            {
-                case "Red":
-                    colorToReturn = eColor.Red;
-                    break;
-                case "Silver":
-                    colorToReturn = eColor.Silver;
-                    break;
-                case "White":
-                    colorToReturn = eColor.White;
-                    break;
-                case "Black":
-                    colorToReturn = eColor.Black;
-                    break;
-                default:
-                    throw new FormatException("Color not found in list");
-                    break;
-            }
-
-            return colorToReturn;
-        }
 
         public override void SetAllVehicleProperties(Dictionary<string, string> i_VehicleProperties)
         {
             base.SetAllVehicleProperties(i_VehicleProperties);
             int.TryParse(i_VehicleProperties["Number Of Doors"], out m_NumberOfDoors);
-            m_CarColor = getColorFromString(i_VehicleProperties["Color"]);
-
-
+            if(!(Enum.TryParse(i_VehicleProperties["Color"],true, out m_CarColor))){
+                throw new FormatException("Color not found in list");
+            }
         }
         public override Dictionary<string, string> BuildProperties()
         {
             Dictionary<string, string> properties = base.BuildProperties();
-            properties.Add("Color", null);
+            properties.Add("Color",Utils.getEnumValuesAsString(typeof(eColor)));
             properties.Add("Number Of Doors", null);
 
             return properties;
         }
+
 
         public override Dictionary<string, string> GetProperties()
         {
@@ -106,9 +83,11 @@ namespace Ex03.GarageLogic
         public override bool ValidateVehicleProperties(Dictionary<string, string> i_VehicleProperties) 
         {
             bool isValid = base.ValidateVehicleProperties(i_VehicleProperties);
-            getColorFromString(i_VehicleProperties["Color"]);
-
-            if(!int.TryParse(i_VehicleProperties["Number Of Doors"], out int numberOfDoors))
+            if (!(Enum.TryParse(i_VehicleProperties["Color"], true, out eColor carColor)))
+            {
+                throw new FormatException("Color not found in list");
+            }
+            if (!int.TryParse(i_VehicleProperties["Number Of Doors"], out int numberOfDoors))
             {
                 throw new FormatException("Number Of Doors is not a number");
             }

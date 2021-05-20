@@ -24,10 +24,8 @@ namespace Ex03.GarageLogic
             switch (i_VehicleType)
             {
                 case eVehicleType.ElectricCar:
-
                     vehicle = new ElectricCar(i_LicenseNumber);
                     break;
-
                 case eVehicleType.ElectricMotorcycle:
                     vehicle = new ElectricMotorcycle(i_LicenseNumber);
                     break;
@@ -35,7 +33,6 @@ namespace Ex03.GarageLogic
                     vehicle = new InternalCombustionEngineCar(i_LicenseNumber);
                     break;
                 case eVehicleType.InternalCombustionEngineMotorcycle:
-
                     vehicle = new InternalCombustionEngineMotorcycle(i_LicenseNumber);
                     break;
                 case eVehicleType.Truck:
@@ -45,6 +42,7 @@ namespace Ex03.GarageLogic
                     vehicle = null;
                     break;
             }
+
             return vehicle;
         }
     }

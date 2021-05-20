@@ -17,6 +17,7 @@ namespace Ex03.GarageLogic
         {
             m_LicenseNumberToVehicleRecord = new Dictionary<string, VehicleRecord>();
         }
+       
         public void AddVehicle(Vehicle i_Vehicle, string i_Owner, string i_PhoneNumber)
         {
             VehicleRecord newRecord = new VehicleRecord(i_Vehicle, i_Owner, i_PhoneNumber);
@@ -40,6 +41,7 @@ namespace Ex03.GarageLogic
         {
             return m_LicenseNumberToVehicleRecord.ContainsKey(i_LicenseNumber);
         }
+
         public VehicleRecord GetVehicleRecordFromTheGarage(string i_LicenseNumber)
         {
             return m_LicenseNumberToVehicleRecord[i_LicenseNumber];
@@ -64,6 +66,7 @@ namespace Ex03.GarageLogic
             }
             return allVehicleState;
         }
+
         public List<string> getAllLicenseNumbersInTheGragaeByChoosenState(string i_ChoosenState)
         {
             List<string> allLicenseNumbers = new List<string>();
@@ -84,11 +87,12 @@ namespace Ex03.GarageLogic
             }
             return allLicenseNumbers;
         }
+        
         public void changeVehicelStateInTheGarage(string i_LicenseNumber, string i_ChoosenState)
         {
             if (CheckIfTheVehicleExistsInTheGarage(i_LicenseNumber))
             {
-                if (!(Enum.TryParse(i_ChoosenState, true, out VehicleRecord.eVehicleState newVehicleState)))
+                if ((Enum.TryParse(i_ChoosenState, true, out VehicleRecord.eVehicleState newVehicleState)))
                 {
                     m_LicenseNumberToVehicleRecord[i_LicenseNumber].VehicleState = newVehicleState;
                 }

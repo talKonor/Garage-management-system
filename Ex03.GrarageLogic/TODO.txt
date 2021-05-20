@@ -1,9 +1,0 @@
-﻿//TODO:
-	UI:
-		create the Menu
-		validate data
-
-
-
-
-

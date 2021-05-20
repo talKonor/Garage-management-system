@@ -37,7 +37,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MenuController.cs" />
-    <Compile Include="MenuDisplay.cs" />
+    <Compile Include="Display.cs" />
     <Compile Include="Program.cs" />
   </ItemGroup>
   <ItemGroup>

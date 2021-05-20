@@ -24,45 +24,21 @@ namespace Ex03.GarageLogic
         public Motorcycle(string i_LicenseNumber)
                 : base(i_LicenseNumber, k_NumberOWheels, k_MaxAirPressure)
         {
-
         }
-
-        private eLicenceType getLicenceTypeFromString(string i_LicenceTypeAsString)
-        {
-            eLicenceType licenceTypeToReturn;
-            switch (i_LicenceTypeAsString)
-            {
-                case "A":
-                    licenceTypeToReturn = eLicenceType.A;
-                    break;
-                case "B1":
-                    licenceTypeToReturn = eLicenceType.B1;
-                    break;
-                case "AA":
-                    licenceTypeToReturn = eLicenceType.AA;
-                    break;
-                case "BB":
-                    licenceTypeToReturn = eLicenceType.BB;
-                    break;
-                default:
-                    throw new FormatException("licence Type not found in list");
-                    break;
-            }
-
-            return licenceTypeToReturn;
-        }
-
 
         public override void SetAllVehicleProperties(Dictionary<string, string> i_VehicleProperties)
         {
             base.SetAllVehicleProperties(i_VehicleProperties);
             int.TryParse(i_VehicleProperties["Engine Volume"], out m_EngineVolume);
-            m_LicenceType = getLicenceTypeFromString(i_VehicleProperties["Licence Type"]);
+            if (!(Enum.TryParse(i_VehicleProperties["Licence Type"], true, out m_LicenceType)))
+            {
+                throw new FormatException("Licence Type not found in list");
+            }
         }
         public override Dictionary<string, string> BuildProperties()
         {
             Dictionary<string, string> properties = base.BuildProperties();
-            properties.Add("Licence Type", null);
+            properties.Add("Licence Type", Utils.getEnumValuesAsString(typeof(eLicenceType)));
             properties.Add("Engine Volume", null);
 
             return properties;
@@ -80,7 +56,10 @@ namespace Ex03.GarageLogic
         {
             bool isValid = base.ValidateVehicleProperties(i_VehicleProperties);
 
-            getLicenceTypeFromString(i_VehicleProperties["Licence Type"]);
+            if (!(Enum.TryParse(i_VehicleProperties["Licence Type"], true, out eLicenceType licenceType)))
+            {
+                throw new FormatException("Licence Type not found in list");
+            }
             if (!int.TryParse(i_VehicleProperties["Engine Volume"], out int engineCapacity))
             {
                 throw new FormatException("Engine Volume is not a number");

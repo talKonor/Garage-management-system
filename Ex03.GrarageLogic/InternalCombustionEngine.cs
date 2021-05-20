@@ -17,31 +17,29 @@ namespace Ex03.GarageLogic
         }
 
         private eFuelType m_FuelType;
-        private float m_CurrentAmountOfFuel;
-        private float m_MaxTankCapacity;
 
 
         public float CurrentAmountOfFuel
         {
             get
             {
-                return m_CurrentAmountOfFuel;
+                return m_EnergeyLeft;
             }
         }
         public float MaxTankCapacity
         {
             get
             {
-                return m_MaxTankCapacity;
+                return m_EnergeyCapacity;
             }
         }
 
         public InternalCombustionEngine(float i_MaxTankCapacity, eFuelType i_FuelType) : base()
         {
-            m_MaxTankCapacity = i_MaxTankCapacity;
+            m_EnergeyCapacity = i_MaxTankCapacity;
             m_FuelType = i_FuelType;
         }
-        public void Fuel(eFuelType i_FuelType, float i_AmountOfFuelToAdd)
+        public void Fuel(eFuelType i_FuelType, float i_AmountOfFuelToAdd,Vehicle i_VehicleToFuel)
         {
             if (i_FuelType.Equals(m_FuelType))
             {
@@ -49,13 +47,14 @@ namespace Ex03.GarageLogic
                 {
                     throw new ArgumentException("Cant add negative amount of fuel");
                 }
-                if (i_AmountOfFuelToAdd + m_CurrentAmountOfFuel <= m_MaxTankCapacity)
+                if (i_AmountOfFuelToAdd + m_EnergeyLeft <= m_EnergeyCapacity)
                 {
-                    m_CurrentAmountOfFuel += i_AmountOfFuelToAdd;
+                    m_EnergeyLeft += i_AmountOfFuelToAdd;
+                    i_VehicleToFuel.EnergyPrecentLeft = CalculatePrecentsOfEnergtLeft();
                 }
                 else
                 {
-                    throw new ValueOutOfRangeException(0, m_MaxTankCapacity - m_CurrentAmountOfFuel, "Cant add fuel more than the size of tank");
+                    throw new ValueOutOfRangeException(0, m_EnergeyCapacity - m_EnergeyLeft, "Cant add fuel more than the size of tank");
                 }
             }
             else
@@ -64,7 +63,10 @@ namespace Ex03.GarageLogic
             }
         }
 
-
+        public string getFuelTypesAsString()
+        {
+            return Utils.getEnumValuesAsString(typeof(eFuelType));
+        }
         public static eFuelType getFuelTypeFromString(string i_FuelTypeAsString)
         {
             eFuelType fuelTypeToReturn;
@@ -89,27 +91,27 @@ namespace Ex03.GarageLogic
 
             return fuelTypeToReturn;
         }
-        public void SetAllEngineProperties(Dictionary<string, string> i_EngineProperties)
+        public override void SetAllEngineProperties(Dictionary<string, string> i_EngineProperties)
         {
-            float.TryParse(i_EngineProperties["Current Amount Of Fuel"], out m_CurrentAmountOfFuel);
+            float.TryParse(i_EngineProperties["Current Amount Of Fuel"], out m_EnergeyLeft);
         }
-        public Dictionary<string, string> BuildProperties()
+        public override Dictionary<string, string> BuildProperties()
         {
             Dictionary<string, string> properties = new Dictionary<string, string>();
             properties.Add("Current Amount Of Fuel", null);
             return properties;
         }
 
-        public Dictionary<string, string> GetProperties()
+        public override Dictionary<string, string> GetProperties()
         {
             Dictionary<string, string> properties = new Dictionary<string, string>();
-            properties.Add("Current Amount Of Fuel", m_CurrentAmountOfFuel.ToString());
-            properties.Add("Max Tank Capacity", m_MaxTankCapacity.ToString());
+            properties.Add("Current Amount Of Fuel", m_EnergeyLeft.ToString());
+            properties.Add("Max Tank Capacity", m_EnergeyCapacity.ToString());
             properties.Add("Fuel Type", m_FuelType.ToString());
             return properties;
         }
 
-        public bool ValidateEngineProperties(Dictionary<string, string> i_VehicleProperties)
+        public override bool ValidateEngineProperties(Dictionary<string, string> i_VehicleProperties)
         {
             bool isValid = true;
 
@@ -117,17 +119,14 @@ namespace Ex03.GarageLogic
             {
                 throw new FormatException("Current Amount Of Fuel is not a number");
             }
-            else if (currentAmountOfFuel < 0 || currentAmountOfFuel > m_MaxTankCapacity)
+            else if (currentAmountOfFuel < 0 || currentAmountOfFuel > m_EnergeyCapacity)
             {
-                throw new ValueOutOfRangeException(0, m_MaxTankCapacity, "Current amount of fuel is out of range");
+                throw new ValueOutOfRangeException(0, m_EnergeyCapacity, "Current amount of fuel is out of range");
             }
 
 
             return isValid;
         }
-        public Vehicle.eEngineType GetEngineType()
-        {
-            return Vehicle.eEngineType.InternalCombustionEngine;
-        }
+
     }
 }
