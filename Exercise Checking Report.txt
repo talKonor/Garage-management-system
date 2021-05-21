@@ -1,0 +1,10 @@
+=================Exercise Checking Report ============ 
+Exercise No...........: 3 
+First Student Details.: 207681081 - Tal Konortov  
+Second Student Details: 206921959  - Yahav Meyuhas 
+Delivery Date.........: 21 - May - 2021 
+Delivered In Delay....: No Delay 
+Reason..........: None
+Visual Studio Version.: 2019   
+Comments..............: None
+==================End Exercise Checking Report  ============
