@@ -12,6 +12,7 @@ namespace Ex03.GarageLogic
         protected const float k_MaxAirPressure = 26f;
         protected const float k_MaxTankCapacity = 120f;
         private const InternalCombustionEngine.eFuelType k_FuelType = InternalCombustionEngine.eFuelType.Soler;
+        
         private bool m_IsDrivingHazardousMaterials;
         private float m_MaximumCarryingWeight;
 
@@ -19,18 +20,21 @@ namespace Ex03.GarageLogic
            : base(i_LicenseNumber, k_NumberOWheels, k_MaxAirPressure)
         {
             m_Engine = new InternalCombustionEngine(k_MaxTankCapacity, k_FuelType);
-
         }
+        
         public override void SetAllVehicleProperties(Dictionary<string, string> i_VehicleProperties)
         {
             base.SetAllVehicleProperties(i_VehicleProperties);
             float.TryParse(i_VehicleProperties["Maximum Carrying Weight"], out m_MaximumCarryingWeight);
+            
             m_IsDrivingHazardousMaterials = i_VehicleProperties["Is Driving Hazardous Materials"] == "Yes";
         }
+        
         public override Dictionary<string, string> BuildProperties()
         {
             Dictionary<string, string> vehicleProperties = base.BuildProperties();
-            vehicleProperties.Add("Is Driving Hazardous Materials", null);
+           
+            vehicleProperties.Add("Is Driving Hazardous Materials", "Yes, No");
             vehicleProperties.Add("Maximum Carrying Weight", null);
 
             return vehicleProperties;
@@ -39,6 +43,7 @@ namespace Ex03.GarageLogic
         public override Dictionary<string, string> GetProperties()
         {
             Dictionary<string, string> vehicleProperties = base.GetProperties();
+           
             vehicleProperties.Add("Is Driving Hazardous Materials", m_IsDrivingHazardousMaterials.ToString());
             vehicleProperties.Add("Maximum Carrying Weight", m_MaximumCarryingWeight.ToString());
 
@@ -54,26 +59,12 @@ namespace Ex03.GarageLogic
                 throw new FormatException("Maximum Carrying Weight is not a number");
             }
 
-            if(i_VehicleProperties["Is Driving Hazardous Materials"]!="Yes" && i_VehicleProperties["Is Driving Hazardous Materials"] != "No")
+            if(i_VehicleProperties["Is Driving Hazardous Materials"] != "Yes" && i_VehicleProperties["Is Driving Hazardous Materials"] != "No")
             {
                 throw new FormatException("Is Driving Hazardous Materials is not 'Yes' or 'No'");
             }
 
-
             return isValid;
-        }
-
-        public override void check()
-        {
-            base.check();
-            Console.WriteLine(m_IsDrivingHazardousMaterials);
-            Console.WriteLine(m_MaximumCarryingWeight);
-            Console.WriteLine(m_Engine);
-
-        }
-        public override Engine getEngine()
-        {
-            return m_Engine;
         }
     }
 

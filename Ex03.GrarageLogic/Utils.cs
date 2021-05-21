@@ -6,16 +6,19 @@ using System.Threading.Tasks;
 
 namespace Ex03.GarageLogic
 {
-    class Utils
+    internal static class Utils
     {
         public static string getEnumValuesAsString(Type enumTypeToStringOfValues)
         {
             string stringToReturn = "";
+            
             foreach (Enum e in Enum.GetValues((enumTypeToStringOfValues)))
             {
                 stringToReturn += string.Format(" {0},", e.ToString());
             }
+            
             stringToReturn = stringToReturn.TrimEnd(',');
+            
             return stringToReturn;
         }
     }

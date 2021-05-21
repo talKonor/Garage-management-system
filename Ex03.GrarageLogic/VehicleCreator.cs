@@ -15,11 +15,10 @@ namespace Ex03.GarageLogic
             InternalCombustionEngineCar=3,
             InternalCombustionEngineMotorcycle=4,
             Truck=5,
-
         }
-        public static Vehicle createVehicle(eVehicleType i_VehicleType,string i_LicenseNumber)
-        {
-            
+
+        public static Vehicle CreateVehicle(eVehicleType i_VehicleType,string i_LicenseNumber)
+        { 
             Vehicle vehicle;
             switch (i_VehicleType)
             {
