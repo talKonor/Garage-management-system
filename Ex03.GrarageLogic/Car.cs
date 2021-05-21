@@ -16,12 +16,10 @@ namespace Ex03.GarageLogic
             Black
         }
 
-        protected const int k_NumberOWheels = 4;
-        protected const float k_MaxAirPressure = 32f;
-
-
-        protected eColor m_CarColor;
-        protected int m_NumberOfDoors;
+        private const int k_NumberOWheels = 4;
+        private const float k_MaxAirPressure = 32f;
+        private eColor m_CarColor;
+        private int m_NumberOfDoors;
 
         public eColor CarColor
         {
