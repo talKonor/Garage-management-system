@@ -8,29 +8,29 @@ namespace Ex03.ConsoleUI
     class Display
     {
         private readonly List<string> r_Options;
-        
+
         public Display(List<string> i_Options)
         {
             r_Options = i_Options;
-        
+
         }
-        
+
         public void ShowMenu(string i_Title)
         {
             int i = 1;
             string menuToPrint = i_Title;
-            
-            Console.Clear();       
+
+            Console.Clear();
             menuToPrint += Environment.NewLine;
-            foreach(string option in r_Options)
+            foreach (string option in r_Options)
             {
-                menuToPrint+=(string.Format("{0}. {1}{2}", i, option,Environment.NewLine));
+                menuToPrint += (string.Format("{0}. {1}{2}", i, option, Environment.NewLine));
                 i++;
             }
 
             Console.WriteLine(menuToPrint);
         }
-        
+
         public int GetUserInput()
         {
             string userInputAsString;
@@ -67,13 +67,13 @@ namespace Ex03.ConsoleUI
 
             return inputIsValid;
         }
-        
-        public int MenuSize {
+
+        public int MenuSize
+        {
             get
             {
                 return r_Options.Count;
             }
         }
-
     }
 }

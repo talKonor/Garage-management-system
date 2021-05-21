@@ -11,31 +11,32 @@ namespace Ex03.ConsoleUI
 {
     class MenuController
     {
-       
+
         Garage m_Garage;
 
         public MenuController()
         {
-           
+
             m_Garage = new Garage();
         }
 
         public void HomePage()
         {
-         Display homeMenu = new Display(new List<string> {"Enter new vehicle to garage","Display all license numbers"
-                                                              , "Change vehicle state","Inflate wheels"
-                                                              ,"Fuel vehicle","Charge vehicle","Display vehicle data","Exit" });
-        int userInput;
+            Display homeMenu = new Display(new List<string> {"Enter new vehicle to garage","Display all license numbers" , "Change vehicle state"
+                                                             ,"Inflate wheels"  ,"Fuel vehicle","Charge vehicle","Display vehicle data","Exit" });
+            int userInput;
+
             do
             {
                 homeMenu.ShowMenu("Please choose one of the following options:");
                 userInput = homeMenu.GetUserInput();
             } while (!Navigator(userInput));
         }
-        
+
         private bool Navigator(int i_UserInput)
         {
             bool isExitOptionHasBeenChosen = false;
+
             try
             {
                 switch (i_UserInput)
@@ -70,7 +71,6 @@ namespace Ex03.ConsoleUI
                         break;
                 }
             }
-
             catch (Exception error)
             {
                 Console.WriteLine(error.Message);
@@ -89,10 +89,12 @@ namespace Ex03.ConsoleUI
         public void FuelVehicle()
         {
             string licenseNumber = GetLicenseNumber();
+
             if (checkIfTheVehicleExistsInTheGarage(licenseNumber))
             {
                 Vehicle vehicleToFuel = m_Garage.GetVehicleRecordFromTheGarage(licenseNumber).Vehicle;
                 Engine vehicleEngine = vehicleToFuel.Engine;
+
                 if (vehicleEngine is InternalCombustionEngine vehicleEngineToFuel)
                 {
                     Console.WriteLine("Please type fuel type to fill: ");
@@ -116,10 +118,12 @@ namespace Ex03.ConsoleUI
         public void ChargeVehicle()
         {
             string licenseNumber = GetLicenseNumber();
+
             if (checkIfTheVehicleExistsInTheGarage(licenseNumber))
             {
                 Vehicle vehicleToCharge = m_Garage.GetVehicleRecordFromTheGarage(licenseNumber).Vehicle;
                 Engine vehicleEngine = vehicleToCharge.Engine;
+
                 if (vehicleEngine is ElectricEngine vehicleEngineToCharge)
                 {
                     Console.WriteLine("Please enter minutes to charge: ");
@@ -147,7 +151,7 @@ namespace Ex03.ConsoleUI
                 Console.WriteLine(string.Format("{0} : {1}", key, vehicleProperties[key]));
             }
         }
-        
+
         private void changeVehicleStateInTheGarage()
         {
             string license = GetLicenseNumber();
@@ -181,6 +185,7 @@ namespace Ex03.ConsoleUI
         public void InflateWheelsToMax()
         {
             string licenseNumber = GetLicenseNumber();
+
             if (checkIfTheVehicleExistsInTheGarage(licenseNumber))
             {
                 m_Garage.GetVehicleRecordFromTheGarage(licenseNumber).Vehicle.Inflate();
@@ -213,7 +218,7 @@ namespace Ex03.ConsoleUI
                 AddNewVehicleRecord(licenseNumber);
             }
         }
-        
+
         private bool checkIfValidPhoneNumber(string i_PhoneNumber)
         {
             bool isValidPhoneNumber = true;
@@ -228,7 +233,7 @@ namespace Ex03.ConsoleUI
 
             return isValidPhoneNumber;
         }
-        
+
         public void AddNewVehicleRecord(string i_LicenseNumber)
         {
             Console.WriteLine("Please enter Owner Name: ");
@@ -246,14 +251,13 @@ namespace Ex03.ConsoleUI
                 Vehicle newVehicle = CreateNewVehicle(i_LicenseNumber);
 
                 m_Garage.AddVehicle(newVehicle, ownerName, ownerPhoneNumber);
-
             }
             catch (Exception error)
             {
                 Console.WriteLine(error.Message);
             }
         }
-        
+
         public Vehicle CreateNewVehicle(string i_LicenseNumber)
         {
             List<VehicleCreator.eVehicleType> allSupportedVehicleTypesInTheGarage = m_Garage.GetAllSupportedVehicleTypesInTheGarage();

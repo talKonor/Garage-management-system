@@ -26,7 +26,7 @@ namespace Ex03.GarageLogic
                 m_LicenseNumber = value;
             }
         }
-       
+
         public float EnergyPercentLeft
         {
             get
@@ -38,7 +38,7 @@ namespace Ex03.GarageLogic
                 m_EnergyPercentLeft = value;
             }
         }
-        
+
         public Engine Engine
         {
             get
@@ -46,7 +46,7 @@ namespace Ex03.GarageLogic
                 return m_Engine;
             }
         }
-        
+
         protected Vehicle(string i_LicenseNumber, int i_NumberOfWheels, float i_MaxAirPressure)
         {
             m_LicenseNumber = i_LicenseNumber;
@@ -61,24 +61,23 @@ namespace Ex03.GarageLogic
         public virtual Dictionary<string, string> BuildProperties()
         {
             Dictionary<string, string> vehicleProperties = new Dictionary<string, string>();
-           
+
             vehicleProperties.Add("ModelName", null);
             vehicleProperties = vehicleProperties.Concat(m_Wheels[0].BuildProperties()).ToDictionary(e => e.Key, e => e.Value);
             vehicleProperties = vehicleProperties.Concat(m_Engine.BuildProperties()).ToDictionary(e => e.Key, e => e.Value);
-            
-            return vehicleProperties;
 
+            return vehicleProperties;
         }
 
         public virtual Dictionary<string, string> GetProperties()
         {
             Dictionary<string, string> vehicleProperties = new Dictionary<string, string>();
-            
+
             vehicleProperties.Add("ModelName", m_ModelName);
             vehicleProperties.Add("Energy Precent Left", m_EnergyPercentLeft.ToString());
             vehicleProperties = vehicleProperties.Concat(m_Wheels[0].GetProperties()).ToDictionary(e => e.Key, e => e.Value);
             vehicleProperties = vehicleProperties.Concat(m_Engine.GetProperties()).ToDictionary(e => e.Key, e => e.Value);
-            
+
             return vehicleProperties;
         }
 
@@ -93,7 +92,7 @@ namespace Ex03.GarageLogic
             m_Engine.SetAllEngineProperties(i_VehicleProperties);
             m_EnergyPercentLeft = m_Engine.CalculatePercentOfEnergyLeft();
         }
-       
+
         public virtual bool ValidateVehicleProperties(Dictionary<string, string> i_VehicleProperties)
         {
             bool isValid = true;

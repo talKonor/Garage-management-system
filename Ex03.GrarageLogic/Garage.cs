@@ -52,31 +52,31 @@ namespace Ex03.GarageLogic
         public List<VehicleCreator.eVehicleType> GetAllSupportedVehicleTypesInTheGarage()
         {
             List<VehicleCreator.eVehicleType> allSupportedVehicleTypesInTheGarage = new List<VehicleCreator.eVehicleType>();
-            
+
             foreach (VehicleCreator.eVehicleType eVehicleType in Enum.GetValues(typeof(VehicleCreator.eVehicleType)))
             {
                 allSupportedVehicleTypesInTheGarage.Add(eVehicleType);
             }
-            
+
             return allSupportedVehicleTypesInTheGarage;
         }
 
         public static List<string> GetAllVehicleState()
         {
             List<string> allVehicleState = new List<string>();
-          
+
             foreach (VehicleRecord.eVehicleState vehicleState in Enum.GetValues(typeof(VehicleRecord.eVehicleState)))
             {
                 allVehicleState.Add(vehicleState.ToString());
             }
-           
+
             return allVehicleState;
         }
 
         public List<string> GetAllLicenseNumbersInTheGarageByChosenState(string i_ChosenState)
         {
             List<string> allLicenseNumbers = new List<string>();
-            
+
             foreach (string key in m_LicenseNumberToVehicleRecord.Keys)
             {
                 if (i_ChosenState == "All")

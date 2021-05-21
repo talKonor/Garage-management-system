@@ -10,8 +10,7 @@ namespace Ex03.GarageLogic
     {
         private const float k_BatteryCapacity = 1.8f;
 
-        public ElectricMotorcycle(string i_LicenseNumber) :
-            base(i_LicenseNumber)
+        public ElectricMotorcycle(string i_LicenseNumber) : base(i_LicenseNumber)
         {
             m_Engine = new ElectricEngine(k_BatteryCapacity);
         }

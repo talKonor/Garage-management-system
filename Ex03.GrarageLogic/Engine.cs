@@ -9,7 +9,7 @@ namespace Ex03.GarageLogic
     public abstract class Engine
     {
         protected float m_EnergyLeft;
-        protected float m_EnergyCapacity; 
+        protected float m_EnergyCapacity;
 
         public float EnergyCapacity
         {
@@ -27,7 +27,7 @@ namespace Ex03.GarageLogic
         }
 
         public abstract void SetAllEngineProperties(Dictionary<string, string> i_EngineProperties);
-       
+
         public abstract Dictionary<string, string> BuildProperties();
 
         public abstract Dictionary<string, string> GetProperties();

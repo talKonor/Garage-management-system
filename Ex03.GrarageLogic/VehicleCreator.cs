@@ -10,16 +10,17 @@ namespace Ex03.GarageLogic
     {
         public enum eVehicleType
         {
-            ElectricCar=1,
-            ElectricMotorcycle=2,
-            InternalCombustionEngineCar=3,
-            InternalCombustionEngineMotorcycle=4,
-            Truck=5,
+            ElectricCar = 1,
+            ElectricMotorcycle = 2,
+            InternalCombustionEngineCar = 3,
+            InternalCombustionEngineMotorcycle = 4,
+            Truck = 5,
         }
 
-        public static Vehicle CreateVehicle(eVehicleType i_VehicleType,string i_LicenseNumber)
-        { 
+        public static Vehicle CreateVehicle(eVehicleType i_VehicleType, string i_LicenseNumber)
+        {
             Vehicle vehicle;
+
             switch (i_VehicleType)
             {
                 case eVehicleType.ElectricCar:
@@ -45,4 +46,4 @@ namespace Ex03.GarageLogic
             return vehicle;
         }
     }
-} 
+}

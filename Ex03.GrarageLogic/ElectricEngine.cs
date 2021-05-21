@@ -7,25 +7,25 @@ using System.Threading.Tasks;
 namespace Ex03.GarageLogic
 {
 
-    
+
     public class ElectricEngine : Engine
-    { 
+    {
         public ElectricEngine(float i_BatteryCapacity) : base()
         {
             m_EnergyCapacity = i_BatteryCapacity;
         }
-        
+
         public override void SetAllEngineProperties(Dictionary<string, string> i_EngineProperties)
         {
             float.TryParse(i_EngineProperties["Battery Time Left"], out m_EnergyLeft);
         }
-      
+
         public override Dictionary<string, string> BuildProperties()
         {
             Dictionary<string, string> properties = new Dictionary<string, string>();
-            
+
             properties.Add("Battery Time Left", null);
-            
+
             return properties;
         }
 
@@ -50,7 +50,7 @@ namespace Ex03.GarageLogic
 
             return isValid;
         }
-       
+
         public void Charge(float i_AmountToCharge, Vehicle i_VehicleToFuel)
         {
             i_AmountToCharge /= 60;

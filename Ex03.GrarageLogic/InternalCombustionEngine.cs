@@ -24,7 +24,7 @@ namespace Ex03.GarageLogic
             m_FuelType = i_FuelType;
         }
 
-        public void Fuel(eFuelType i_FuelType, float i_AmountOfFuelToAdd,Vehicle i_VehicleToFuel)
+        public void Fuel(eFuelType i_FuelType, float i_AmountOfFuelToAdd, Vehicle i_VehicleToFuel)
         {
             if (i_FuelType.Equals(m_FuelType))
             {
@@ -52,42 +52,42 @@ namespace Ex03.GarageLogic
         {
             return Utils.getEnumValuesAsString(typeof(eFuelType));
         }
-       
+
         public static eFuelType GetFuelTypeFromString(string i_FuelTypeAsString)
         {
-            Enum.TryParse(i_FuelTypeAsString,true,out eFuelType fuelTypeToReturn);
-           
+            Enum.TryParse(i_FuelTypeAsString, true, out eFuelType fuelTypeToReturn);
+
             return fuelTypeToReturn;
         }
-        
+
         public override void SetAllEngineProperties(Dictionary<string, string> i_EngineProperties)
         {
             float.TryParse(i_EngineProperties["Current Amount Of Fuel"], out m_EnergyLeft);
         }
-        
+
         public override Dictionary<string, string> BuildProperties()
         {
             Dictionary<string, string> properties = new Dictionary<string, string>();
-           
+
             properties.Add("Current Amount Of Fuel", null);
-            
+
             return properties;
         }
 
         public override Dictionary<string, string> GetProperties()
         {
             Dictionary<string, string> properties = new Dictionary<string, string>();
-           
+
             properties.Add("Current Amount Of Fuel", m_EnergyLeft.ToString());
             properties.Add("Max Tank Capacity", m_EnergyCapacity.ToString());
             properties.Add("Fuel Type", m_FuelType.ToString());
-           
+
             return properties;
         }
 
         public override bool ValidateEngineProperties(Dictionary<string, string> i_EngineProperties)
         {
-           const bool isValid = true;
+            const bool isValid = true;
 
             if (!float.TryParse(i_EngineProperties["Current Amount Of Fuel"], out float currentAmountOfFuel))
             {

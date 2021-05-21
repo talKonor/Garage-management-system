@@ -11,7 +11,7 @@ namespace Ex03.ConsoleUI
         public static void Main()
         {
             MenuController menu = new MenuController();
-            
+
             menu.HomePage();
         }
     }

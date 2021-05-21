@@ -51,7 +51,7 @@ namespace Ex03.GarageLogic
         public Dictionary<string, string> GetProperties()
         {
             Dictionary<string, string> vehicleRecordProperties = new Dictionary<string, string>();
-           
+
             vehicleRecordProperties.Add("Owner Name", m_OwnerName);
             vehicleRecordProperties.Add("Owner Phone Number", m_OwnerPhoneNumber);
             vehicleRecordProperties.Add("Vehicle State", m_VehicleState.ToString());
